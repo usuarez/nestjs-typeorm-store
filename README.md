@@ -7,7 +7,9 @@
 
 ## Description
 
-A NestJs + TypeORM REST API Store with the basic expected features
+A NestJs + TypeORM REST API Store with the basic expected features.
+
+Running on Node v18.12.1
 
 ## Installation
 
@@ -19,6 +21,18 @@ or
 
 ```bash
 $ yarn
+```
+
+## Setting the Envs
+
+```bash
+DB_NAME=
+DB_PORT=
+DB_HOST=
+HOST_API=
+DB_PASSWORD=
+DB_USERNAME=
+JWT_SECRET=
 ```
 
 ## Running the app
