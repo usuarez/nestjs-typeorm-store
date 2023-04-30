@@ -10,12 +10,15 @@ import {
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { validRolesEnum } from 'src/auth/enums/validRoles';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoriesService.create(createCategoryDto);
   }
@@ -31,6 +34,7 @@ export class CategoriesController {
   }
 
   @Patch(':id')
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -39,6 +43,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
   remove(@Param('id') id: string) {
     return this.categoriesService.remove(+id);
   }

@@ -7,8 +7,6 @@ import {
   MinLength,
   IsOptional,
   IsPositive,
-  IsJSON,
-  IsObject,
 } from 'class-validator';
 import { IDescription } from '../interfaces/productDescription.interface';
 

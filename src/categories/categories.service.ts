@@ -46,16 +46,15 @@ export class CategoriesService {
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const toUpdate = updateCategoryDto;
+    const category = await this.categoryRepository.preload({
+      id,
+      ...toUpdate,
+    });
+    if (!category)
+      throw new NotFoundException('The requested category doesnt exist');
+
     try {
-      const category = await this.categoryRepository.preload({
-        id,
-        ...toUpdate,
-      });
-      if (!category)
-        throw new NotFoundException('The requested category doesnt exist');
-
       await this.categoryRepository.save(category);
-
       return category;
     } catch (error) {
       throw new BadRequestException();

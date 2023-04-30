@@ -61,18 +61,116 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Test
+## Endpoints
+
+By default, the server runs on port 3000, so you can access from `localhost:3000/` using [Postman][1] or [Insomnia][2]
+
+[1]: https://www.postman.com/
+[2]: https://insomnia.rest/download
+
+#### Auth
 
 ```bash
-# unit tests
-$ npm run test
+# checkAuth
+GET    api/auth/checkAuth
 
-# e2e tests
-$ npm run test:e2e
+# login
+POST   api/auth/login
 
-# test coverage
-$ npm run test:cov
+# create user
+POST   api/auth/
+
+# update user
+PATCH  api/auth/:id
+
+# reset user password
+PATCH  api/auth/reset-password/:id
+
+# delete
+DELETE api/auth/:id
 ```
+
+#### Categories
+
+```bash
+# findAll
+GET    api/categories/
+
+# findOne
+GET    api/categories/:id
+
+# create
+POST   api/categories/
+
+# update
+PATCH  api/categories/:id
+
+# delete
+DELETE api/categories/:id
+```
+
+#### Products
+
+```bash
+# findAll
+GET    api/products/
+
+# findOne
+GET    api/products/:id
+GET    api/products/:slug
+
+# create
+POST   api/products/
+
+# update
+PATCH  api/products/:id
+
+# delete
+DELETE api/products/:id
+```
+
+#### Orders
+
+```bash
+# findAll
+GET    api/orders/
+
+# findOne
+GET    api/orders/:id
+
+# create
+POST   api/orders/
+
+# update
+PATCH  api/orders/:id
+
+# delete
+DELETE api/orders/:id
+```
+
+#### Tags
+
+```bash
+# findAll
+GET    api/tags/
+
+# findOne
+GET    api/tags/:id
+
+# create
+POST   api/tags/
+
+# update
+PATCH  api/tags/:id
+
+# delete
+DELETE api/tags/:id
+```
+
+## Incomming Features
+
+- Images crud (cloudinary)
+- Admin settings crud (contact data, payment info)
 
 ## Stay in touch
 

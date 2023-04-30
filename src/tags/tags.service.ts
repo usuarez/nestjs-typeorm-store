@@ -46,15 +46,14 @@ export class TagsService {
 
   async update(id: number, updateTagDto: UpdateTagDto) {
     const toUpdate = updateTagDto;
+    const tag = await this.tagRepository.preload({
+      id,
+      ...toUpdate,
+    });
+    if (!tag) throw new NotFoundException('The requested tag doesnt exist');
+
     try {
-      const tag = await this.tagRepository.preload({
-        id,
-        ...toUpdate,
-      });
-      if (!tag) throw new NotFoundException('The requested tag doesnt exist');
-
       await this.tagRepository.save(tag);
-
       return tag;
     } catch (error) {
       throw new BadRequestException();
@@ -62,15 +61,13 @@ export class TagsService {
   }
 
   async remove(id: number) {
+    const tag = await this.tagRepository.preload({
+      id,
+      isActive: false,
+    });
+    if (!tag) throw new NotFoundException('The requested tag doesnt exist');
     try {
-      const tag = await this.tagRepository.preload({
-        id,
-        isActive: false,
-      });
-      if (!tag) throw new NotFoundException('The requested tag doesnt exist');
-
       await this.tagRepository.save(tag);
-
       return tag;
     } catch (error) {
       throw new BadRequestException();
