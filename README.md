@@ -26,13 +26,21 @@ $ yarn
 ## Setting the Envs
 
 ```bash
+# DB
 DB_NAME=
 DB_PORT=
 DB_HOST=
 HOST_API=
 DB_PASSWORD=
 DB_USERNAME=
+
+# Jwt
 JWT_SECRET=
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
 ## Running the app
@@ -167,9 +175,31 @@ PATCH  api/tags/:id
 DELETE api/tags/:id
 ```
 
+#### Images
+
+```bash
+# findAll
+GET    api/images/
+
+# findOne
+GET    api/images/:id
+
+# create
+POST   api/images/
+
+# update
+PATCH  api/images/:id
+
+# delete
+DELETE api/images/:id
+
+# bulk delete
+DELETE api/images/bulkDelete/:ids
+# comma separated ids api/images/bulkDelete/5465464,4556754754,234324242
+```
+
 ## Incomming Features
 
-- Images crud (cloudinary)
 - Admin settings crud (contact data, payment info)
 
 ## Stay in touch

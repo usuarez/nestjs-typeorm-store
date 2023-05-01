@@ -23,9 +23,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
-  /**
-   * Endpoints created with test purposes
-   * 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   upload(@UploadedFile() file: Express.Multer.File) {
@@ -36,14 +33,12 @@ export class ImagesController {
   cloudDestroy(@Param('id') id: string) {
     return this.imagesService.destroy(id);
   }
-  
+
   @Get('destroyBulk/:id')
   cloudDestroyBulk(@Param('id') id: string) {
     const ids = id.split(',');
     return this.imagesService.destroyBulk(ids);
   }
-  
-  */
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
@@ -64,5 +59,14 @@ export class ImagesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.imagesService.remove(+id);
+  }
+
+  @Delete('bulkDelete/:ids')
+  removeBulk(@Param('ids') ids: string) {
+    const numericIds: number[] = [];
+    ids.split(',').forEach((id) => {
+      numericIds.push(+id);
+    });
+    return this.imagesService.removeBulk(numericIds);
   }
 }

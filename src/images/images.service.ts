@@ -23,7 +23,7 @@ import { UploadApiErrorResponse } from 'cloudinary';
 
 // typeorm
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class ImagesService {
@@ -111,14 +111,59 @@ export class ImagesService {
   async remove(id: number) {
     const toDelete = await this.findOne(id);
     if (!toDelete) throw new NotFoundException();
+
     const query = await this.destroy(toDelete.public_id);
     if (query.result !== 'ok') throw new NotFoundException();
 
-    const deleted = await this.imageRepository.remove(toDelete);
-    return deleted;
+    try {
+      const deleted = await this.imageRepository.remove(toDelete);
+      return deleted;
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 
-  removeBulk(ids: string[]) {
-    return `This action removes a #${ids} image`;
+  async removeBulk(ids: number[]) {
+    // find many elements by id
+    const imagesToDelete = await this.imageRepository
+      .createQueryBuilder('images')
+      .where('images.id IN (:...ids)', { ids })
+      .getMany();
+
+    // get images public ids
+    const idsToDeleteFromCloud = [];
+    imagesToDelete.forEach((image) => {
+      idsToDeleteFromCloud.push(image.public_id);
+    });
+
+    // delete from cloudinary
+    const cloudDeletedItems = await this.destroyBulk(idsToDeleteFromCloud);
+
+    const deletedCloudIds = [];
+
+    // save deleted ids in a new array
+    idsToDeleteFromCloud.forEach((id) => {
+      if (cloudDeletedItems.deleted[id] === 'deleted') deletedCloudIds.push(id);
+    });
+
+    // delete from db
+    try {
+      // images To Delete
+      const imagesToDeleteFromDB = [];
+      deletedCloudIds.forEach((cloudId) => {
+        const image = imagesToDelete.find(
+          (image) => image.public_id === cloudId,
+        );
+        imagesToDeleteFromDB.push(image);
+      });
+      const deletePromises = [];
+      imagesToDeleteFromDB.forEach((image) => {
+        deletePromises.push(this.imageRepository.delete(image));
+      });
+      const results = await Promise.all(deletePromises);
+      return results;
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 }
