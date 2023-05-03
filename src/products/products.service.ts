@@ -2,7 +2,12 @@
 import { isUUID } from 'class-validator';
 
 // common
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 
 // dto
 import { PaginationDto } from 'src/common/dto/pagination.dto';
@@ -94,7 +99,14 @@ export class ProductsService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const product = await this.findOne(id);
+    if (!product) throw new NotFoundException();
+    try {
+      const result = await this.productRepository.delete(id);
+      return result;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 }

@@ -27,7 +27,6 @@ export class CreateProductDto {
   @IsArray()
   sizes: string[];
 
-  @IsArray()
   @IsOptional()
   description?: IDescription;
 

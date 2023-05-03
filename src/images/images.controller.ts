@@ -10,6 +10,9 @@ import {
   Query,
 } from '@nestjs/common';
 
+// decorators
+import { Auth } from 'src/auth/decorators/auth.decorator';
+
 // dto
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
@@ -18,29 +21,14 @@ import { ImagesService } from './images.service';
 
 // interceptors
 import { FileInterceptor } from '@nestjs/platform-express';
+import { validRolesEnum } from 'src/auth/enums/validRoles';
 
 @Controller('images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  upload(@UploadedFile() file: Express.Multer.File) {
-    return this.imagesService.upload(file);
-  }
-
-  @Get('destroy/:id')
-  cloudDestroy(@Param('id') id: string) {
-    return this.imagesService.destroy(id);
-  }
-
-  @Get('destroyBulk/:id')
-  cloudDestroyBulk(@Param('id') id: string) {
-    const ids = id.split(',');
-    return this.imagesService.destroyBulk(ids);
-  }
-
   @Post()
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
   @UseInterceptors(FileInterceptor('file'))
   create(@UploadedFile() file: Express.Multer.File) {
     return this.imagesService.create(file);
@@ -57,11 +45,13 @@ export class ImagesController {
   }
 
   @Delete(':id')
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
   remove(@Param('id') id: string) {
     return this.imagesService.remove(+id);
   }
 
   @Delete('bulkDelete/:ids')
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
   removeBulk(@Param('ids') ids: string) {
     const numericIds: number[] = [];
     ids.split(',').forEach((id) => {

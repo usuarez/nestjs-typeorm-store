@@ -23,7 +23,7 @@ import { UploadApiErrorResponse } from 'cloudinary';
 
 // typeorm
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ImagesService {

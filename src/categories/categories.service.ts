@@ -3,10 +3,16 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+
+// dtos
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { InjectRepository } from '@nestjs/typeorm';
+
+// entities
 import { Category } from './entities/category.entity';
+
+// typeorm
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -62,14 +68,14 @@ export class CategoriesService {
   }
 
   async remove(id: number) {
-    try {
-      const category = await this.categoryRepository.preload({
-        id,
-        isActive: false,
-      });
-      if (!category)
-        throw new NotFoundException('The requested category doesnt exist');
+    const category = await this.categoryRepository.preload({
+      id,
+      isActive: false,
+    });
+    if (!category)
+      throw new NotFoundException('The requested category doesnt exist');
 
+    try {
       await this.categoryRepository.save(category);
 
       return category;

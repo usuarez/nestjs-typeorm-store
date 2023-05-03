@@ -71,10 +71,11 @@ $ yarn run start:prod
 
 ## Endpoints
 
-By default, the server runs on port 3000, so you can access from `localhost:3000/` using [Postman][1] or [Insomnia][2]
+By default, the server runs on port 3000, so you can access from `localhost:3000/` using [Postman][1], [Insomnia][2] or [Thunder Client for vscode][3]
 
 [1]: https://www.postman.com/
 [2]: https://insomnia.rest/download
+[3]: https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
 
 #### Auth
 
@@ -198,9 +199,24 @@ DELETE api/images/bulkDelete/:ids
 # comma separated ids api/images/bulkDelete/5465464,4556754754,234324242
 ```
 
+#### Admin settings
+
+```bash
+# find
+GET    api/admin/
+
+# create
+POST   api/admin/
+
+# update
+PATCH  api/admin/:id
+
+
+```
+
 ## Incomming Features
 
-- Admin settings crud (contact data, payment info)
+- Social Login
 
 ## Stay in touch
 

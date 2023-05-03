@@ -7,13 +7,23 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { OrdersService } from './orders.service';
+
+// dtos
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+
+// decorators
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+
+// entities
 import { User } from 'src/auth/entities/user.entity';
+
+// enums
 import { validRolesEnum } from 'src/auth/enums/validRoles';
+
+// services
+import { OrdersService } from './orders.service';
 
 @Controller('orders')
 export class OrdersController {

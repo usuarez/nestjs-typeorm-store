@@ -1,3 +1,4 @@
+// main tools
 import {
   BadRequestException,
   CanActivate,
@@ -7,6 +8,8 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
+
+// entities
 import { User } from '../entities/user.entity';
 
 @Injectable()

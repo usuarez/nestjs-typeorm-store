@@ -1,8 +1,15 @@
+// main tools
 import { applyDecorators, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { validRolesEnum } from '../enums/validRoles';
-import { UserRoleGuard } from '../guards/user-role.guard';
+
+// decorators
 import { RoleProtected } from './role-protected.decorator';
+
+// enums
+import { validRolesEnum } from '../enums/validRoles';
+
+// guards
+import { UserRoleGuard } from '../guards/user-role.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 export function Auth(...roles: validRolesEnum[]) {
   return applyDecorators(

@@ -2,18 +2,23 @@
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 
+// controllers
+import { AppController } from './app.controller';
+
+// modules
+import { CategoriesModule } from './categories/categories.module';
+import { ProductsModule } from './products/products.module';
+import { OrdersModule } from './orders/orders.module';
+import { ImagesModule } from './images/images.module';
+import { AdminModule } from './admin/admin.module';
+import { TagsModule } from './tags/tags.module';
+import { AuthModule } from './auth/auth.module';
+
 // typeorm
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// modules
-import { AppController } from './app.controller';
+// services
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { ProductsModule } from './products/products.module';
-import { CategoriesModule } from './categories/categories.module';
-import { TagsModule } from './tags/tags.module';
-import { OrdersModule } from './orders/orders.module';
-import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -35,6 +40,7 @@ import { ImagesModule } from './images/images.module';
     TagsModule,
     OrdersModule,
     ImagesModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

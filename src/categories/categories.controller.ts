@@ -7,11 +7,19 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
+
+// dtos
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+
+// decoratores
 import { Auth } from 'src/auth/decorators/auth.decorator';
+
+//enums
 import { validRolesEnum } from 'src/auth/enums/validRoles';
+
+// services
+import { CategoriesService } from './categories.service';
 
 @Controller('categories')
 export class CategoriesController {

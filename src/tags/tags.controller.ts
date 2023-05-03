@@ -7,11 +7,19 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { TagsService } from './tags.service';
+
+// dtos
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
+
+// decorators
 import { Auth } from 'src/auth/decorators/auth.decorator';
+
+// enums
 import { validRolesEnum } from 'src/auth/enums/validRoles';
+
+// services
+import { TagsService } from './tags.service';
 
 @Controller('tags')
 export class TagsController {
