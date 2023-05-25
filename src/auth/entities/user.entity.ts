@@ -26,6 +26,12 @@ export class User {
   @Column('boolean', { default: true })
   isActive: boolean;
 
+  @Column('text', { nullable: true })
+  picture: string;
+
+  @Column('text', { nullable: true })
+  sub: string;
+
   @Column('text', { array: true, default: ['user'] })
   roles: string[];
 

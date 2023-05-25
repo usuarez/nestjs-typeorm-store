@@ -55,6 +55,12 @@ export class Product {
   })
   categories: string[];
 
+  @Column('text', {
+    array: true,
+    default: [],
+  })
+  images: string[];
+
   @BeforeInsert()
   checkSlugInsert() {
     if (!this.slug) {

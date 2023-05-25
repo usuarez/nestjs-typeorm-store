@@ -1,5 +1,5 @@
 // decorators
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { GetUserToken } from './decorators/get-user-token.decorator';
 
 import { GetUser } from './decorators/get-user.decorator';
@@ -17,6 +17,8 @@ import { validRolesEnum } from './enums/validRoles';
 
 // services
 import { AuthService } from './auth.service';
+import { CreateGoogleUserDto } from './dto/create-google-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -31,8 +33,18 @@ export class AuthController {
   login(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
+  @Post('OAuth')
+  googleAuth(@Body() googleUserDto: CreateGoogleUserDto) {
+    return this.authService.authGoogleUser(googleUserDto);
+  }
 
-  @Get('checkAuth')
+  @Post(':id')
+  @Auth()
+  update(@Body() updateUserDto: UpdateUserDto, @Param('id') id: string) {
+    return this.authService.updateUser(id, updateUserDto);
+  }
+
+  @Get('refresh')
   @Auth(validRolesEnum.user)
   checkAuthStatus(@GetUser() user: User, @GetUserToken() token: string) {
     return this.authService.checkJwt(user, token);

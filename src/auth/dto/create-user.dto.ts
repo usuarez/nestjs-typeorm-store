@@ -1,10 +1,13 @@
 import {
   IsEmail,
-  IsString,
   Matches,
+  IsString,
   MaxLength,
   MinLength,
+  IsOptional,
+  IsArray,
 } from 'class-validator';
+import { validRolesEnum } from '../enums/validRoles';
 
 export class CreateUserDto {
   @IsString()
@@ -19,7 +22,20 @@ export class CreateUserDto {
       'The password must have a Uppercase, lowercase letter and a number',
   })
   password: string;
+
   @IsString()
   @MinLength(1)
   fullName: string;
+
+  @IsString()
+  @IsOptional()
+  picture: string;
+
+  @IsString()
+  @IsOptional()
+  sub?: string;
+
+  @IsString()
+  @IsArray()
+  roles: validRolesEnum[];
 }
