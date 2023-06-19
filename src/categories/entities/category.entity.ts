@@ -13,15 +13,8 @@ export class Category {
   @Column('bool', { default: true })
   isActive: boolean;
 
-  @Column('text', { default: '' })
-  icon: string;
-
   @BeforeInsert()
   nameToLowerCase() {
-    this.name = this.name
-      .trim()
-      .toLocaleLowerCase()
-      .replaceAll(' ', '-')
-      .replaceAll("'", '');
+    this.name = this.name.trim().toLocaleLowerCase().replaceAll("'", '');
   }
 }

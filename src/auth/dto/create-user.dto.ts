@@ -6,6 +6,7 @@ import {
   MinLength,
   IsOptional,
   IsArray,
+  IsPhoneNumber,
 } from 'class-validator';
 import { validRolesEnum } from '../enums/validRoles';
 
@@ -34,6 +35,10 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   sub?: string;
+
+  @IsString()
+  @IsOptional()
+  phone?: string;
 
   @IsString()
   @IsArray()

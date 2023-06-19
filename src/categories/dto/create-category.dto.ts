@@ -8,7 +8,4 @@ export class CreateCategoryDto {
   @IsBoolean()
   @IsOptional()
   isActive: boolean;
-
-  @IsString()
-  icon?: string;
 }

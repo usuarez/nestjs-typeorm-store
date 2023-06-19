@@ -35,6 +35,13 @@ export class OrdersController {
     return this.ordersService.create(createOrderDto, user);
   }
 
+  @Get('/admin')
+  @Auth()
+  @Auth(validRolesEnum.admin, validRolesEnum.superUser)
+  adminFindAll(@GetUser() user: User) {
+    return this.ordersService.adminFindAll(user);
+  }
+
   @Get()
   @Auth()
   findAll(@GetUser() user: User) {

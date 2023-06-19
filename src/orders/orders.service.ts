@@ -24,6 +24,7 @@ import { ProductsService } from 'src/products/products.service';
 
 // enum
 import { orderStatusEnum } from './enums/order-status.enum';
+import { validRolesEnum } from 'src/auth/enums/validRoles';
 
 @Injectable()
 export class OrdersService {
@@ -71,6 +72,17 @@ export class OrdersService {
     }
   }
 
+  async adminFindAll(user: User) {
+    if (
+      !user.roles.includes(validRolesEnum.superUser) &&
+      !user.roles.includes(validRolesEnum.admin)
+    )
+      throw new BadRequestException();
+
+    const query = await this.orderRepository.find();
+    return query;
+  }
+
   async findAll(user: User) {
     const orders = await this.orderRepository
       .createQueryBuilder('order')
@@ -107,8 +119,13 @@ export class OrdersService {
     if (!status)
       throw new BadRequestException('Status is required to update an order');
 
-    if (status !== orderStatusEnum.cancelledByUser)
-      throw new BadRequestException('User only can cancel orders');
+    if (
+      status !== orderStatusEnum.cancelledByUser &&
+      status !== orderStatusEnum.paymentDelivered
+    )
+      throw new BadRequestException(
+        'User only can cancel orders and deliver payments',
+      );
 
     try {
       const toUpdate = await this.orderRepository.preload({

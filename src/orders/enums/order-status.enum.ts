@@ -5,5 +5,6 @@ export enum orderStatusEnum {
   delivered = 'DELIVERED',
   paymentReceived = 'PAYMENT_RECEIVED',
   cancelledByUser = 'CANCELLED_BY_USER',
+  paymentDelivered = 'PAYMENT_DELIVERED',
   cancelledByAdmin = 'CANCELLED_BY_ADMIN',
 }

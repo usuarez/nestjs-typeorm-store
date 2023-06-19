@@ -32,6 +32,9 @@ export class User {
   @Column('text', { nullable: true })
   sub: string;
 
+  @Column('text', { nullable: true })
+  phone: string;
+
   @Column('text', { array: true, default: ['user'] })
   roles: string[];
 
